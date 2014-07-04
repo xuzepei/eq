@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EEE1827E-7597-4DB6-A705-BE41CD3FD631</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Food</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B6E93CBA-1B5C-4E14-A421-C74E7DCD7815</key>
+		<string>https://github.com/xuzepei/eq.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>eq/Food.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B6E93CBA-1B5C-4E14-A421-C74E7DCD7815</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/xuzepei/eq.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B6E93CBA-1B5C-4E14-A421-C74E7DCD7815</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B6E93CBA-1B5C-4E14-A421-C74E7DCD7815</string>
+			<key>IDESourceControlWCCName</key>
+			<string>eq_git</string>
+		</dict>
+	</array>
+</dict>
+</plist>

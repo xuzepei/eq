@@ -1,0 +1,55 @@
+//
+// Prefix header for all source files of the 'Food' target in the 'Food' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+    #import <CoreData/CoreData.h>
+#endif
+
+#ifndef DEBUG
+#define NSLog //
+#endif
+
+#define TIME_OUT 20
+
+#define CT_UNKNOWN 0
+#define CT_XML 1
+#define CT_JSON 2
+
+//TAB TAG
+#define TT_IQ 0
+#define TT_EQ 1
+#define TT_FAVORITE 3
+
+typedef enum {
+	NotReachable = 0,
+	ReachableViaWiFi,
+	ReachableViaWWAN
+} NetworkStatus;
+
+#define AD_HEIGHT 50.0
+#define NAVIGATION_BAR_COLOR [UIColor colorWithRed:0.80 green:0.22 blue:0.43 alpha:1.00]
+
+#define APP_URL @""
+
+//广告ID
+#define AD_ID @"a14ef04b44bd708"
+#define SCREEN_AD_ID @"a153a9766de2d6a"
+#define SCREEN_AD_RATE 5
+
+//UMeng 设置
+#define UMENG_APP_KEY @"53b4bac756240bcc9208cc75"
+
+//获取协同信息URL
+#define APP_INFO_URL @"http://www.tapguilt.com/api/eq.php"
+
+
