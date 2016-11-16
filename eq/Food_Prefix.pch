@@ -42,14 +42,14 @@ typedef enum {
 #define APP_URL @""
 
 //广告ID
-#define AD_ID @"a14ef04b44bd708"
-#define SCREEN_AD_ID @"a153a9766de2d6a"
+#define AD_ID @"ca-app-pub-1207330468801232/9597110781"
+#define SCREEN_AD_ID @"ca-app-pub-1207330468801232/2073843985"
 #define SCREEN_AD_RATE 5
 
 //UMeng 设置
-#define UMENG_APP_KEY @"53b4bac756240bcc9208cc75"
+#define UMENG_APP_KEY @""
 
 //获取协同信息URL
-#define APP_INFO_URL @"http://www.tapguilt.com/api/eq.php"
+#define APP_INFO_URL @""
 
 

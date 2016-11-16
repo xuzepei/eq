@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "GADBannerView.h"
-#import "GADInterstitial.h"
-#import <iAd/iAd.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @class FDEQViewController;
-@interface FoodAppDelegate : NSObject <UIApplicationDelegate,GADBannerViewDelegate,GADInterstitialDelegate,ADBannerViewDelegate,ADInterstitialAdDelegate> {
+@interface FoodAppDelegate : NSObject <UIApplicationDelegate,GADBannerViewDelegate,GADInterstitialDelegate> {
     
     UIWindow *window;
 
@@ -39,12 +37,9 @@
 @property (assign)BOOL isAdMobVisible;
 @property (nonatomic, retain) GADInterstitial *adInterstitial;
 
-@property (nonatomic, retain) ADBannerView *adView;
-@property (assign)BOOL isAdViewVisible;
-@property (nonatomic, retain) ADInterstitialAd* interstitial;
-
 @property (nonatomic,retain) NSString* ad_id;
 @property (nonatomic,assign)BOOL showFullScreenAd;
+@property (nonatomic,assign)BOOL needRequestFullscreenAd;
 
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;

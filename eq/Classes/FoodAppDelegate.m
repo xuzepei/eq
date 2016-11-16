@@ -9,9 +9,7 @@
 #import "FoodAppDelegate.h"
 #import "FDEQViewController.h"
 #import "RCTool.h"
-#import "GADBannerView.h"
 #import "RCHttpRequest.h"
-#import "MobClick.h"
 
 @implementation FoodAppDelegate
 
@@ -23,12 +21,9 @@
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //UMeng
-    [MobClick startWithAppkey:UMENG_APP_KEY
-                 reportPolicy:SEND_INTERVAL
-                    channelId:nil];
+    [GADMobileAds configureWithApplicationID:[RCTool getAdId]];
     
 	[RCTool importLocalData];
 	
@@ -58,7 +53,7 @@
     }
 
 	
-    [window addSubview:_eqNavigationController.view];
+    [window setRootViewController:_eqNavigationController];
     [window makeKeyAndVisible];
 
     return YES;
@@ -95,7 +90,9 @@
      */
 	
     self.showFullScreenAd = YES;
-	[self getAppInfo];
+    self.needRequestFullscreenAd = YES;
+    self.ad_id = [RCTool getAdId];
+    [self getAD];
 }
 
 
@@ -244,9 +241,6 @@
     self.adMobAd = nil;
     self.adInterstitial = nil;
     
-    self.adView = nil;
-    self.interstitial = nil;
-    
     self.ad_id = nil;
 	
     [super dealloc];
@@ -299,23 +293,7 @@
 		_adMobAd = nil;
 	}
     
-	if(NO == [RCTool isIpad])
-	{
-		_adMobAd = [[GADBannerView alloc]
-                    initWithFrame:CGRectMake(0.0,0,
-                                             320.0f,
-                                             50.0f)];
-	}
-	else
-	{
-        _adMobAd = [[GADBannerView alloc]
-                    initWithFrame:CGRectMake(0.0,0,
-                                             728.0f,
-                                             90.0f)];
-	}
-	
-	
-	
+    _adMobAd = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
 	_adMobAd.adUnitID = [RCTool getAdId];
 	_adMobAd.delegate = self;
 	_adMobAd.rootViewController = _eqViewController;
@@ -333,13 +311,7 @@
         self.adMobAd = nil;
     }
     
-    if(self.adView && self.adView.superview)
-    {
-        [self.adView removeFromSuperview];
-        self.adView = nil;
-    }
     self.adInterstitial = nil;
-    self.interstitial = nil;
 	
 	[self initAdMob];
     
@@ -351,8 +323,6 @@
 
 - (void)adViewDidReceiveAd:(GADBannerView *)bannerView
 {
-	NSLog(@"adViewDidReceiveAd");
-    
     CGRect rect = _adMobAd.frame;
     _adMobAd.alpha = 1.0;
     rect.origin.x = ([RCTool getScreenSize].width - rect.size.width)/2.0;
@@ -371,15 +341,14 @@ didFailToReceiveAdWithError:(GADRequestError *)error
     
     self.isAdMobVisible = NO;
     
-    [self initAdView];
+    [self performSelector:@selector(initAdMob) withObject:nil afterDelay:10];
 }
 
 - (void)getAdInterstitial
 {
     if(nil == self.adInterstitial && [self.ad_id length])
     {
-        _adInterstitial = [[GADInterstitial alloc] init];
-        _adInterstitial.adUnitID = [RCTool getScreenAdId];
+        _adInterstitial = [[GADInterstitial alloc] initWithAdUnitID:[RCTool getScreenAdId]];
         _adInterstitial.delegate = self;
     }
     
@@ -388,8 +357,6 @@ didFailToReceiveAdWithError:(GADRequestError *)error
 
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial
 {
-    NSLog(@"interstitialDidReceiveAd");
-    
     if(self.showFullScreenAd)
     {
         self.showFullScreenAd = NO;
@@ -403,13 +370,18 @@ didFailToReceiveAdWithError:(GADRequestError *)error
 {
     NSLog(@"%s",__FUNCTION__);
     
-    [self initInterstitial];
+    [self performSelector:@selector(getAdInterstitial) withObject:nil afterDelay:10];
 }
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)ad
 {
     self.adInterstitial = nil;
-    [self getAdInterstitial];
+    
+    if(self.needRequestFullscreenAd)
+    {
+        self.needRequestFullscreenAd = NO;
+        [self getAdInterstitial];
+    }
 }
 
 - (void)showInterstitialAd:(id)argument
@@ -418,81 +390,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error
     {
         [self.adInterstitial presentFromRootViewController:_eqNavigationController.visibleViewController];
     }
-    else if(self.interstitial && self.interstitial.loaded)
-    {
-        [self.interstitial presentFromViewController:_eqNavigationController.visibleViewController];
-    }
 }
-
-#pragma mark - iAd
-
-- (void)initAdView
-{
-    if(nil == _adView)
-        _adView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
-    _adView.delegate = self;
-    CGRect rect = _adView.frame;
-    rect.origin.y = [RCTool getScreenSize].height;
-    _adView.frame = rect;
-    
-    self.isAdViewVisible = NO;
-}
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    NSLog(@"iAd,bannerViewDidLoadAd");
-    
-    [_eqNavigationController.visibleViewController.view addSubview:_adView];
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    NSLog(@"iAd,didFailToReceiveAdWithError");
-    
-    self.isAdViewVisible = NO;
-    [self.adView removeFromSuperview];
-    self.adView = nil;
-    
-    //如果iAd失败，则调用admob
-    [self performSelector:@selector(initAdMob) withObject:nil afterDelay:3];
-}
-
-- (void)initInterstitial
-{
-    if(NO == [RCTool isIpad])
-        return;
-    
-    if(nil == _interstitial)
-    {
-        _interstitial = [[ADInterstitialAd alloc] init];
-        _interstitial.delegate = self;
-    }
-    
-}
-
-- (void)interstitialAdDidLoad:(ADInterstitialAd *)interstitialAd
-{
-    NSLog(@"iAd,interstitialAdDidLoad");
-    
-    [interstitialAd presentInView:_eqNavigationController.visibleViewController.view];
-}
-
-- (void)interstitialAdDidUnload:(ADInterstitialAd *)interstitialAd
-{
-    NSLog(@"iAd,interstitialAdDidUnload");
-    self.interstitial = nil;
-}
-
-- (void)interstitialAd:(ADInterstitialAd *)interstitialAd didFailWithError:(NSError *)error
-{
-    NSLog(@"iAd,interstitialAd <%@> recieved error <%@>", interstitialAd, error);
-    self.interstitial = nil;
-    
-    //尝试调用Admob的全屏广告
-    [self getAdInterstitial];
-}
-
-
 
 @end
 

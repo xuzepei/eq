@@ -374,29 +374,29 @@ static int g_reachabilityType = -1;
 
 + (NSString*)getAdId
 {
-    NSDictionary* app_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_info"];
-    if(app_info && [app_info isKindOfClass:[NSDictionary class]])
-    {
-        NSString* ad_id = [app_info objectForKey:@"ad_id"];
-        if([ad_id length])
-            return ad_id;
-    }
+//    NSDictionary* app_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_info"];
+//    if(app_info && [app_info isKindOfClass:[NSDictionary class]])
+//    {
+//        NSString* ad_id = [app_info objectForKey:@"ad_id"];
+//        if([ad_id length])
+//            return ad_id;
+//    }
     
     return AD_ID;
 }
 
 + (NSString*)getScreenAdId
 {
-    NSDictionary* app_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_info"];
-    if(app_info && [app_info isKindOfClass:[NSDictionary class]])
-    {
-        NSString* ad_id = [app_info objectForKey:@"mediation_id"];
-        if(0 == [ad_id length])
-            ad_id = [app_info objectForKey:@"screen_ad_id"];
-        
-        if([ad_id length])
-            return ad_id;
-    }
+//    NSDictionary* app_info = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_info"];
+//    if(app_info && [app_info isKindOfClass:[NSDictionary class]])
+//    {
+//        NSString* ad_id = [app_info objectForKey:@"mediation_id"];
+//        if(0 == [ad_id length])
+//            ad_id = [app_info objectForKey:@"screen_ad_id"];
+//        
+//        if([ad_id length])
+//            return ad_id;
+//    }
     
     return SCREEN_AD_ID;
 }
