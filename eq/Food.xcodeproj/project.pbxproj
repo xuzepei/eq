@@ -521,6 +521,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Classes/GoogleMobileAdsSdkiOS-7.11.0",
+					"$(PROJECT_DIR)/Classes",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Food_Prefix.pch;
@@ -534,6 +535,7 @@
 					"$(PROJECT_DIR)/UMeng",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.intelligentapps.EQ;
 				PRODUCT_NAME = Food;
 				PROVISIONING_PROFILE = "b6c9da74-438c-4bdd-9b20-6ab2a1eebccf";
 				PROVISIONING_PROFILE_SPECIFIER = all_dev;
@@ -559,6 +561,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Classes/GoogleMobileAdsSdkiOS-7.11.0",
+					"$(PROJECT_DIR)/Classes",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -574,6 +577,7 @@
 					"$(PROJECT_DIR)/UMeng",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.intelligentapps.EQ;
 				PRODUCT_NAME = Food;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b6c9da74-438c-4bdd-9b20-6ab2a1eebccf";
@@ -599,6 +603,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Classes/GoogleMobileAdsSdkiOS-7.11.0",
+					"$(PROJECT_DIR)/Classes",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Food_Prefix.pch;
@@ -612,6 +617,7 @@
 					"$(PROJECT_DIR)/UMeng",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.intelligentapps.EQ;
 				PRODUCT_NAME = Food;
 				PROVISIONING_PROFILE = "b6c9da74-438c-4bdd-9b20-6ab2a1eebccf";
 				PROVISIONING_PROFILE_SPECIFIER = all_dev;

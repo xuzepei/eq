@@ -11,6 +11,9 @@
 #import "RCTool.h"
 #import "RCHttpRequest.h"
 
+@interface FoodAppDelegate ()
+@end
+
 @implementation FoodAppDelegate
 
 @synthesize window;
@@ -24,7 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [GADMobileAds configureWithApplicationID:[RCTool getAdId]];
-    
+
 	[RCTool importLocalData];
 	
 	_eqViewController = [[FDEQViewController alloc] initWithNibName:nil
@@ -58,6 +61,7 @@
 
     return YES;
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -285,20 +289,15 @@
 
 - (void)initAdMob
 {
-    if(_adMobAd && _adMobAd.alpha == 0.0 && nil == _adMobAd.superview)
-	{
-		[_adMobAd removeFromSuperview];
-		_adMobAd.delegate = nil;
-		[_adMobAd release];
-		_adMobAd = nil;
-	}
+    if(nil == _adMobAd)
+    {
+        _adMobAd = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
+    }
     
-    _adMobAd = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
-	_adMobAd.adUnitID = [RCTool getAdId];
-	_adMobAd.delegate = self;
-	_adMobAd.rootViewController = _eqViewController;
-	[_adMobAd loadRequest:[GADRequest request]];
-	
+    _adMobAd.adUnitID = [RCTool getAdId];
+    _adMobAd.delegate = self;
+    _adMobAd.rootViewController = _eqViewController;
+    [_adMobAd loadRequest:[GADRequest request]];
 }
 
 - (void)getAD
@@ -324,14 +323,11 @@
 - (void)adViewDidReceiveAd:(GADBannerView *)bannerView
 {
     CGRect rect = _adMobAd.frame;
-    _adMobAd.alpha = 1.0;
     rect.origin.x = ([RCTool getScreenSize].width - rect.size.width)/2.0;
-    rect.origin.y = [RCTool getScreenSize].height - _adMobAd.bounds.size.height;
+    rect.origin.y = [RCTool getScreenSize].height - _adMobAd.bounds.size.height - NAVIGATION_BAR_HEIGHT - STATUS_BAR_HEIGHT;
     _adMobAd.frame = rect;
-    
-    [_eqNavigationController.topViewController.view addSubview:_adMobAd];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ADD_AD_NOTIFICATION" object:nil];
+
+    [_eqNavigationController.visibleViewController.view addSubview:_adMobAd];
 }
 
 - (void)adView:(GADBannerView *)bannerView
@@ -386,7 +382,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error
 
 - (void)showInterstitialAd:(id)argument
 {
-    if(self.adInterstitial)
+    if(self.adInterstitial && self.adInterstitial.isReady)
     {
         [self.adInterstitial presentFromRootViewController:_eqNavigationController.visibleViewController];
     }

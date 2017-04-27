@@ -47,7 +47,7 @@
 	{
 		if(NO == [RCTool isIpad])
 		{
-			[question drawInRect:CGRectMake(10,20,300,100) 
+			[question drawInRect:CGRectMake(10,20,[RCTool getScreenSize].width-20,100)
 						withFont:[UIFont boldSystemFontOfSize:17]];
 		}
 		else
@@ -92,7 +92,7 @@
 	if(NO == [RCTool isIpad])
 	{
 		size = [[_item objectForKey:@"question"] sizeWithFont:[UIFont boldSystemFontOfSize:17]
-												   constrainedToSize:CGSizeMake(300,CGFLOAT_MAX)];
+												   constrainedToSize:CGSizeMake([RCTool getScreenSize].width-20,CGFLOAT_MAX)];
 		_offset_y = size.height + 30;
 		
 		if(nil == _previous)
@@ -152,7 +152,7 @@
                 offset_y = -40.0f;
             
 			self._resultButton = [UIButton buttonWithType:UIButtonTypeCustom];
-			_resultButton.frame = CGRectMake(self.frame.size.width - 100,self.frame.size.height -  - offset_y - 82,90,30);
+			_resultButton.frame = CGRectMake(self.frame.size.width - 100,self.frame.size.height - offset_y - 82,90,30);
 			_resultButton.titleLabel.font = [UIFont systemFontOfSize: 16];
 			_resultButton.layer.borderWidth = 1.0;
 			_resultButton.layer.borderColor = [[UIColor blackColor] CGColor];
@@ -279,7 +279,7 @@
 			if(0 == i)
 			{
 				_button0.hidden = NO;
-				_button0.frame = CGRectMake(offset_x,_offset_y,300,40);
+				_button0.frame = CGRectMake(offset_x,_offset_y,[RCTool getScreenSize].width-20,40);
 				[_button0 setTitle:[selection objectForKey:@"text"] 
 						  forState:UIControlStateNormal];
 				
@@ -290,7 +290,7 @@
 			else if(1 == i)
 			{
 				_button1.hidden = NO;
-				_button1.frame = CGRectMake(offset_x,_offset_y + 50*i,300,40);
+				_button1.frame = CGRectMake(offset_x,_offset_y + 50*i,[RCTool getScreenSize].width-20,40);
 				[_button1 setTitle:[selection objectForKey:@"text"] 
 						  forState:UIControlStateNormal];
 				
@@ -301,7 +301,7 @@
 			else if(2 == i)
 			{
 				_button2.hidden = NO;
-				_button2.frame = CGRectMake(offset_x,_offset_y + 50*i,300,40);
+				_button2.frame = CGRectMake(offset_x,_offset_y + 50*i,[RCTool getScreenSize].width-20,40);
 				[_button2 setTitle:[selection objectForKey:@"text"] 
 						  forState:UIControlStateNormal];
 				
@@ -312,7 +312,7 @@
 			else if(3 == i)
 			{	
 				_button3.hidden = NO;
-				_button3.frame = CGRectMake(offset_x,_offset_y + 50*i,300,40);
+				_button3.frame = CGRectMake(offset_x,_offset_y + 50*i,[RCTool getScreenSize].width-20,40);
 				[_button3 setTitle:[selection objectForKey:@"text"] 
 						  forState:UIControlStateNormal];
 				
@@ -323,7 +323,7 @@
 			else if(4 == i)
 			{
 				_button4.hidden = NO;
-				_button4.frame = CGRectMake(offset_x,_offset_y + 50*i,300,40);
+				_button4.frame = CGRectMake(offset_x,_offset_y + 50*i,[RCTool getScreenSize].width-20,40);
 				[_button4 setTitle:[selection objectForKey:@"text"] 
 						  forState:UIControlStateNormal];
 				
@@ -792,6 +792,13 @@
     [appDelegate showInterstitialAd:nil];
     
 	[_delegate clickResultButton];
+    
+    //[self performSelector:@selector(showAd) withObject:nil afterDelay:1.0];
+}
+
+- (void)showAd
+{
+
 }
 
 

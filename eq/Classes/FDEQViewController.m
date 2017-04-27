@@ -32,19 +32,19 @@
 		
 		if(NO == [RCTool isIpad])
 		{
-			self.view.frame = CGRectMake(0,0,320,460);
+			//self.view.frame = CGRectMake(0,0,[RCTool getScreenSize].width,[RCTool getScreenSize].height);
 			
 			button.frame = CGRectMake(0,0,200,30);
 			button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-			button.center = CGPointMake(160, 460 - 20 - 42 - 50);
+			button.center = CGPointMake([RCTool getScreenSize].width/2.0, [RCTool getScreenSize].height - 20 - 42 - 50 - 30);
 		}
 		else
 		{
-			self.view.frame = CGRectMake(0,0,768,1004);
+			//self.view.frame = CGRectMake(0,0,[RCTool getScreenSize].width,[RCTool getScreenSize].height);
 			
 			button.frame = CGRectMake(0,0,300,50);
 			button.titleLabel.font = [UIFont boldSystemFontOfSize:26];
-			button.center = CGPointMake(768/2.0, 1004 - 30 - 90 - 40);
+			button.center = CGPointMake([RCTool getScreenSize].width/2.0, [RCTool getScreenSize].height - 50 - 90 - 42);
 		}
 		
 		
@@ -59,6 +59,21 @@
 	[super viewWillAppear:animated];
 	
     self.title = NSLocalizedString(@"EQ 情商",@"");
+    
+    
+    UIView* adView = [RCTool getAdView];
+    if(adView)
+    {
+        CGRect rect = adView.frame;
+        rect.origin.y = [RCTool getScreenSize].height - rect.size.height - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT;
+        
+        //        if([RCTool systemVersion] >= 7.0)
+        //            rect.origin.y -= STATUS_BAR_HEIGHT;
+        
+        adView.frame = rect;
+        
+        [self.view addSubview:adView];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

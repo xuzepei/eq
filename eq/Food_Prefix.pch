@@ -38,7 +38,8 @@ typedef enum {
 
 #define AD_HEIGHT 50.0
 #define NAVIGATION_BAR_COLOR [UIColor colorWithRed:0.80 green:0.22 blue:0.43 alpha:1.00]
-
+#define STATUS_BAR_HEIGHT 20.0
+#define NAVIGATION_BAR_HEIGHT 44.0
 #define APP_URL @""
 
 //广告ID

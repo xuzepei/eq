@@ -35,6 +35,8 @@
 			self.view.frame = CGRectMake(0,0,768,1004);
 		}
         
+        //self.view.frame = CGRectMake(0,0,[RCTool getScreenSize].width,[RCTool getScreenSize].height);
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAdView:) name:@"ADD_AD_NOTIFICATION" object:nil];
 		
 		NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:1
@@ -66,16 +68,19 @@
 {
 	[super viewWillAppear:animated];
 	
-	UIView* adView = [RCTool getAdView];
-	if(adView)
-	{
-		CGRect rect = adView.frame;
-        rect.origin.y = self.view.frame.size.height - rect.size.height;
-		
-		adView.frame = rect;
-		
-		[self.view addSubview:adView];
-	}
+    UIView* adView = [RCTool getAdView];
+    if(adView)
+    {
+        CGRect rect = adView.frame;
+        rect.origin.y = [RCTool getScreenSize].height - rect.size.height - STATUS_BAR_HEIGHT - NAVIGATION_BAR_HEIGHT;
+        
+        //        if([RCTool systemVersion] >= 7.0)
+        //            rect.origin.y -= STATUS_BAR_HEIGHT;
+        
+        adView.frame = rect;
+        
+        [self.view addSubview:adView];
+    }
 	
 	if(nil == _timeLabel)
 	{
@@ -105,8 +110,8 @@
 	
 	[_timeLabel removeFromSuperview];
 	
-	if(_scrollView)
-		[_scrollView removeFromSuperview];
+//	if(_scrollView)
+//		[_scrollView removeFromSuperview];
 }
 
 
@@ -1403,15 +1408,15 @@
 			_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,0,
 																		 self.view.frame.size.width,
 																		 self.view.frame.size.height - 50)];
-			
-			[_scrollView setContentSize:CGSizeMake(320, 800)];
+
+			[_scrollView setContentSize:CGSizeMake([RCTool getScreenSize].width, [RCTool getScreenSize].height+200)];
 			
 			
 			if(nil == _resultView)
 			{
 				_resultView = [[FDEQResultView alloc] initWithFrame:CGRectMake(0,0,
 																			   self.view.frame.size.width,
-																			   800)];
+																			   [RCTool getScreenSize].height+200)];
 			}
 		}
 		else
@@ -1420,14 +1425,14 @@
 																		 self.view.frame.size.width,
 																		 self.view.frame.size.height - 90)];
 			
-			[_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 1000)];
+			[_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, [RCTool getScreenSize].height+400)];
 			
 			
 			if(nil == _resultView)
 			{
 				_resultView = [[FDEQResultView alloc] initWithFrame:CGRectMake(0,0,
 																			   self.view.frame.size.width,
-																			   1000)];
+																			   [RCTool getScreenSize].height+400)];
 			}
 		}
 
